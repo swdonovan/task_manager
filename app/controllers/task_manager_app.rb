@@ -26,4 +26,19 @@ class TaskManagerApp < Sinatra::Base
     @task = Tasks.find(id.to_i)
     erb :show
   end
+
+  get '/tasks/:id/edit' do
+    @task = Task.find(params[:id])
+    erb :edit
+  end
+
+  put '/tasks/:id' do |id|
+    Task.update(id.to_i, params[:task])
+    redirect "/tasks/#{id}"
+  end
+
+  delete '/tasks/:id' do |id|
+    Tasks.destroy(id.to_i)
+    redirect '/tasks'
+  end
 end
